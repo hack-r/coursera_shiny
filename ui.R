@@ -20,9 +20,9 @@ shinyUI(fluidPage(
                     "))
     ),
   # Application title
-  titlePanel("Coursera Class Project Shiny App",
-             
-             windowTitle = "Under Development"),
+  titlePanel("Stackoverflow.com Answer Predictor for R Questions",
+             h5("Johns Hopkins Coursera Developing Data Products class project"),
+             windowTitle = "SO Answer Predictor"),
   
   # Sidebar to select options
   sidebarLayout(
@@ -30,34 +30,23 @@ shinyUI(fluidPage(
 #       img(src="",
 #           width = "200px", height = "200px"),
       h4("Options"),
-      radioButtons("radio", label = "Select Analysis",
-                   choices = list("Descriptive Statistics",
-                                  "Visualization")
-      ),
-      
-      hr(),
-      dateRangeInput('dateRange',
-                     label = 'Date range input: yyyy-mm-dd',
-                     start = Sys.Date() - 100,
-                     end = Sys.Date()-14),
-      hr(),
-      selectInput("select_pop", label = "Population",
-                  choices = list("All",
-                                 "New")),
-      
-      br(),
-      br(),
-      br(),
-      br(),
-      br()
+
+      selectInput("select_analysis", label = "Select Pre-made or Custom Analysis",
+                  choices = list("Pre-made",
+                                 "Custom")),
+      conditionalPanel(
+        condition = "input.select_analysis == 'Custom'", 
+                    checkboxGroupInput('show_vars', 'Indepedent variables to use:',
+                    names(dat))
+        )
     ),
     
     # Main Panel for displaying results
     mainPanel(
       tabsetPanel(
-        tabPanel("Info", textOutput("population")),
-        tabPanel("Results", htmlOutput("results"))
-        
+        tabPanel("Info", textOutput("analysis")),
+        tabPanel("Results", htmlOutput("results")),
+        tabPanel("Visualization")
       )
     )
   )
