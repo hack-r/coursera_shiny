@@ -74,9 +74,22 @@ dat$age <- NULL
 idx      <- createDataPartition(y=dat$answers, p=0.6, list=FALSE )
 training <- dat[idx,]
 testing  <- dat[-idx,]
-x        <- training[-ncol(training)]
-#x        <- as.matrix(x)
+x        <- training[-ncol(training)
 y        <- training$answers
+
+# Fix a few records
+x[,3][is.na(x[,3])] <- 0]
+
+# Make a binary version of the outcome
+training$answers.binary <- training$answers
+training$answers.binary[training$answers.binary > 0] <- 1
+testing$answers.binary <- testing$answers
+testing$answers.binary[testing$answers.binary > 0] <- 1
+y            <- as.factor(y)
+y2           <- as.numeric(y)
+y2[y2 == 1]  <- 0
+y2[y2 > 1]   <- 1
+y2           <- as.factor(y2)
 
 # Run shinyServer function
 shinyServer(function(input, output) {
