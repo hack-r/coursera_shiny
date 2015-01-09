@@ -13,6 +13,7 @@ require(shiny)
 require(shinyapps)
 require(stringr)
 
+if(refresh == TRUE){
 # XPath Stackoverflow data scrape of questions tagged with R
 data <- read.csv("stackoverflow.csv") 
 
@@ -91,7 +92,7 @@ y2           <- as.numeric(y)
 y2[y2 == 1]  <- 0
 y2[y2 > 1]   <- 1
 y2           <- as.factor(y2)
-
+}
 
 # Read in RF --------------------------------------------------------------
 rf <- readRDS("rf.rds")
