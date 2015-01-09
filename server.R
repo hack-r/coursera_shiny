@@ -113,7 +113,8 @@ shinyServer(function(input, output) {
   output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                  
 
   # Handle tag nightmare
-  
+#   for(i in 1:colnames(userdf)){
+#     if(colnames(userdf[i]) %in% paste(input$sotags)){userdf[,i] <- 1} }
   
   # Reactively update the prediction dataset!
   values <- reactiveValues()
@@ -127,4 +128,10 @@ shinyServer(function(input, output) {
       values$df$votes       <- input$votes
   })
   output$table <- renderTable({values$df})
+  userdata     <- renderTable({data.frame(values$df)})
+  runmodel     <- reactive({
+                      predict(rf, newdata = userdata)
+  })
+
+  output$results <- renderUI({runmodel})
 })  

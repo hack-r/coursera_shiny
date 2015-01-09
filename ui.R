@@ -1099,8 +1099,9 @@ shinyUI(
         tabPanel("Info", textOutput("info"),  textOutput("info1"), br(),
                    br(), textOutput("info2"), textOutput("info3"), br(),
                          "Tag(s):", textOutput("info4")),
-        tabPanel("Results", htmlOutput("results")),
-        tabPanel("Visualization", tableOutput("table"))
+        tabPanel("Results", uiOutput("results")),
+        tabPanel("User Data", tableOutput("table")),
+        tabPanel("Visualization")
       )
     )
   )
