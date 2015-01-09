@@ -2,11 +2,15 @@
 ## Desc: This is the ui of my Coursera class project shiny app
 ## Copyright: (c) 2014, Jason D. Miller
 
+# Tell me if we need to refresh the pre-made analysis
+refresh <- FALSE
+
 # Libraries
 require(data.table)
 require(plyr)
 require(shiny)
 require(shinyapps)
+require(stringr)
 
 # XPath Stackoverflow data scrape of questions tagged with R
 data <- read.csv("stackoverflow.csv") 
@@ -40,6 +44,39 @@ tag.data  <- ddply(data, .(id), function(x)
 x.mean   <- colMeans(tag.data[-1])
 tagmeans <- tag.data[,c('id', names(sort(x.mean, decreasing=TRUE)))] 
 data     <- cbind(data, tagmeans) 
+
+# Get response variable into last column, get rid of NA's 
+answers <- data$answers
+n       <- which(names(data) == "answers")
+data2   <- data[, -n]
+dat     <- cbind(data2,answers)
+
+# Get rid of unwanted columns
+dat$page           <- NULL
+dat$result_1_to_50 <- NULL
+dat$resultpage_URI <- NULL
+dat$link           <- NULL
+dat$link_source    <- NULL
+dat$tag            <- NULL
+dat$question       <- NULL
+dat$title          <- NULL
+dat$tags           <- NULL
+dat$badges         <- NULL
+dat$badgestr       <- NULL
+
+# Fix age variable
+# for( i in 1:nrow(dat)){
+#   if(grep("mins",dat$age[1]))
+# }
+dat$age <- NULL
+
+# Partition Data
+idx      <- createDataPartition(y=dat$answers, p=0.6, list=FALSE )
+training <- dat[idx,]
+testing  <- dat[-idx,]
+x        <- training[-ncol(training)]
+#x        <- as.matrix(x)
+y        <- training$answers
 
 # Run shinyServer function
 shinyServer(function(input, output) {

@@ -21,8 +21,8 @@ shinyUI(fluidPage(
     ),
   # Application title
   titlePanel("Stackoverflow.com Answer Predictor for R Questions",
-             h5("Johns Hopkins Coursera Developing Data Products class project"),
              windowTitle = "SO Answer Predictor"),
+  h5("Coursera Developing Data Products class project"),
   
   # Sidebar to select options
   sidebarLayout(
