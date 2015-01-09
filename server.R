@@ -104,21 +104,10 @@ shinyServer(function(input, output) {
   output$info1 <- renderText({paste("Model accuracy is 81%")})
   output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
   output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})
-  #                     if(input$select_task == "Overview"){
-  #                       
-  #                             paste("The selected task is",
-  #                                          paste(input$select_task)),
-  #                              br(), paste(""),
-  #                              br(), paste(""),
-  #                              br(), 
-  #                              
-  #                     }
-  #                     
-  #                     if(input$select_task == "Prediction"){  
-                    #}
-# ,
-# br(), paste("I predict that you will get an answer"),
-# br(), paste("A diagnostic plot is available in the Visualization tab"),
-# br(), paste("The selected tag(s) are:" paste(input$sotags))
-  
-})
+  output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                                   
+  output$table <- renderTable({ data.frame(input$numbron, input$numsilv,
+                                           input$numgold, input$numrep,
+                                           input$numviews, 
+                                           input$numvotes, t(input$sotags)
+                                           )})
+})  
