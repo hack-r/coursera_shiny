@@ -65,6 +65,9 @@ if(refresh == TRUE){
   dat$tags           <- NULL
   dat$badges         <- NULL
   dat$badgestr       <- NULL
+  dat$rownum         <- NULL
+  dat$id             <- NULL
+  dat$id.1           <- NULL
   
   # Fix age variable
   # for( i in 1:nrow(dat)){
@@ -80,7 +83,7 @@ if(refresh == TRUE){
   y        <- training$answers
   
   # Fix a few records
-  x[,3][is.na(x[,3])] <- 0
+  x[,2][is.na(x[,2])] <- 0
   
   # Make a binary version of the outcome
   training$answers.binary                              <- training$answers
@@ -92,10 +95,13 @@ if(refresh == TRUE){
   y2[y2 == 1]  <- 0
   y2[y2 > 1]   <- 1
   y2           <- as.factor(y2)
-}
 
+  rf <- readRDS("rf.rds")
+
+  userdf.default <- x[1,]
+  userdf         <- userdf.default
+}
 # Read in RF --------------------------------------------------------------
-rf <- readRDS("rf.rds")
 
 # Run shinyServer function
 shinyServer(function(input, output) {
@@ -104,10 +110,21 @@ shinyServer(function(input, output) {
   output$info1 <- renderText({paste("Model accuracy is 81%")})
   output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
   output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})
-  output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                                   
-  output$table <- renderTable({ data.frame(input$numbron, input$numsilv,
-                                           input$numgold, input$numrep,
-                                           input$numviews, 
-                                           input$numvotes, t(input$sotags)
-                                           )})
+  output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                  
+
+  # Handle tag nightmare
+  
+  
+  # Reactively update the prediction dataset!
+  values <- reactiveValues()
+  values$df <- userdf
+  newEntry <- observe({
+      values$df$bron_badges <- input$bron_badges
+      values$df$silv_badges <- input$silv_badges
+      values$df$gold_badges <- input$gold_badges
+      values$df$reputation  <- input$reputation
+      values$df$views       <- input$views
+      values$df$votes       <- input$votes
+  })
+  output$table <- renderTable({values$df})
 })  

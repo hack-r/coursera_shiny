@@ -11,7 +11,7 @@ require(stringr)
 rf          <- randomForest(x = x, y = y2, ntree = 50)
 predictions <- predict(rf, newdata = training)
 
-confusionMatrix(predictions, training$answers.binary)
+confusionMatrix(predictions, training$answers.binary) #87.2% accuracy
 
 # Testing the Algorithm ---------------------------------------------------
 validation <- predict(rf, newdata = testing)

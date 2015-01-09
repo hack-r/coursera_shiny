@@ -40,22 +40,22 @@ shinyUI(
 #         condition = "input.select_task == 'Prediction'", 
         h5('Enter parameters for prediction:'),
         hr(),
-        numericInput("numbron", 
+        numericInput("bron_badges", 
                      label = h6("Numer of Bronze Badges"), 
                      value = 1),
-        numericInput("numsilv", 
+        numericInput("silv_badges", 
                      label = h6("Numer of Silver Badges"), 
                      value = 1),
-        numericInput("numgold", 
+        numericInput("gold_badges", 
                      label = h6("Numer of Gold Badges"), 
                      value = 1),
-        numericInput("numrep", 
+        numericInput("reputation", 
                      label = h6("Numer of Reputation Points"), 
                      value = 1),
-        numericInput("numviews", 
+        numericInput("views", 
                      label = h6("Numer of Views"), 
                      value = 1),
-        numericInput("numvotes", 
+        numericInput("votes", 
                      label = h6("Numer of Votes"), 
                      value = 1),
 
@@ -1100,7 +1100,7 @@ shinyUI(
                    br(), textOutput("info2"), textOutput("info3"), br(),
                          "Tag(s):", textOutput("info4")),
         tabPanel("Results", htmlOutput("results")),
-        tabPanel("Visualization", uiOutput("table"))
+        tabPanel("Visualization", tableOutput("table"))
       )
     )
   )
