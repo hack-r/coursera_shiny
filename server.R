@@ -99,14 +99,14 @@ rf <- readRDS("rf.rds")
 # Run shinyServer function
 shinyServer(function(input, output) {
   output$info <- renderText(
-                    if(input$task == "Overview"){
+                    if(input$select_task == "Overview"){
                             {paste("The selected task is",
                                          paste(input$select_task)),
                              br(), paste("Model accuracy is 81%"),
                              br(), paste("A ROC plot is available in the Visualization tab"),
                              br(), paste("The selected plot(s) are:" paste(input$plot_options))
                              }}
-                    if(input$task == "Prediction"){
+                    if(input$select_task == "Prediction"){
                           {paste("The selected task is",
                                  paste(input$select_task)),
                            br(), paste("I predict that you will get an answer"),
