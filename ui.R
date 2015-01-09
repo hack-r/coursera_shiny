@@ -33,11 +33,12 @@ shinyUI(fluidPage(
 
       selectInput("select_task", label = "Model Overview or Custom Prediction",
                   choices = list("Overview",
-                                 "Prediction")),
-      conditionalPanel(
-        condition = "input.select_task == 'Overview'", 
-                    checkboxGroupInput('plot_options', 'Select diagnostic plot:',
+                                 "Prediction"), selected = "Overview", 
+                  multiple = FALSE),
+
+      checkboxGroupInput('plot_options', 'Select diagnostic plot:',
                     "MSE", "Error Rates", "ROC"),
+      conditionalPanel(
         condition = "input.select_task == 'Prediction'", 
         h5('Enter parameters for prediction:'),
         hr(),
@@ -1086,8 +1087,7 @@ shinyUI(fluidPage(
                            "yahoo"	,
                            "yaml"	,
                            "yield"	,
-                           "zoo"	,
-        ) 
+                           "zoo") 
         ) #ends checkbox
      ) #ends conditional panel
     ),  #ends sidebarPanel
