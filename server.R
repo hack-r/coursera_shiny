@@ -7,6 +7,7 @@ refresh <- FALSE
 
 # Libraries
 require(data.table)
+require(manipulate)
 require(plyr)
 require(shiny)
 require(shinyapps)
@@ -36,11 +37,11 @@ data$gold_badges <- as.numeric(data$gold_badges)
 #Split tags apart
 data$tags <- as.character(data$tags)
 data$tags <- gsub(" ", "", data$tags)
-tags      <- unique(unlist(strsplit(data$tags, ";")))
+sotags    <- unique(unlist(strsplit(data$tags, ";")))
 data$id   <- 1:nrow(data)
 tag.data  <- ddply(data, .(id), function(x)
              table(factor(unlist(strsplit(x$tags, ";")),
-                 levels = tags)))
+                 levels = sotags)))
 x.mean   <- colMeans(tag.data[-1])
 tagmeans <- tag.data[,c('id', names(sort(x.mean, decreasing=TRUE)))] 
 data     <- cbind(data, tagmeans) 
@@ -78,22 +79,39 @@ x        <- training[-ncol(training)
 y        <- training$answers
 
 # Fix a few records
-x[,3][is.na(x[,3])] <- 0]
+x[,3][is.na(x[,3])] <- 0
 
 # Make a binary version of the outcome
-training$answers.binary <- training$answers
+training$answers.binary                              <- training$answers
 training$answers.binary[training$answers.binary > 0] <- 1
-testing$answers.binary <- testing$answers
-testing$answers.binary[testing$answers.binary > 0] <- 1
+testing$answers.binary                               <- testing$answers
+testing$answers.binary[testing$answers.binary > 0]   <- 1
 y            <- as.factor(y)
 y2           <- as.numeric(y)
 y2[y2 == 1]  <- 0
 y2[y2 > 1]   <- 1
 y2           <- as.factor(y2)
 
+
+# Read in RF --------------------------------------------------------------
+rf <- readRDS("rf.rds")
+
 # Run shinyServer function
 shinyServer(function(input, output) {
-  output$analysis <- renderText({paste("The selected analysis is",
-                                         paste(input$select_analysis)) })
+  output$info <- renderText(
+                    if(input$task == "Overview"){
+                            {paste("The selected task is",
+                                         paste(input$select_task)),
+                             br(), paste("Model accuracy is 81%"),
+                             br(), paste("A ROC plot is available in the Visualization tab"),
+                             br(), paste("The selected plot(s) are:" paste(input$plot_options))
+                             }}
+                    if(input$task == "Prediction"){
+                          {paste("The selected task is",
+                                 paste(input$select_task)),
+                           br(), paste("I predict that you will get an answer"),
+                           br(), paste("A diagnostic plot is available in the Visualization tab"),
+                           br(), paste("The selected tag(s) are:" paste(input$sotags))
+                  }})
   
 })
