@@ -1096,10 +1096,10 @@ shinyUI(
     # Main Panel for displaying results
     mainPanel(
       tabsetPanel(
-        tabPanel("Info", textOutput("info"),  textOutput("info1"), br(),
+        tabPanel("Info",  textOutput("info1"), br(),
                    br(), textOutput("info2"), textOutput("info3"), br(),
                          "Tag(s):", textOutput("info4")),
-        tabPanel("Results", uiOutput("results")),
+        tabPanel("Results", textOutput("results")),
         tabPanel("User Data", tableOutput("table")),
         tabPanel("Visualization")
       )

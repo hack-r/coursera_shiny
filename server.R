@@ -9,10 +9,13 @@ refresh <- FALSE
 require(data.table)
 require(manipulate)
 require(plyr)
+require(randomForest)
 require(shiny)
 require(shinyapps)
 require(stringr)
 
+
+# Generate RF -------------------------------------------------------
 if(refresh == TRUE){
   # XPath Stackoverflow data scrape of questions tagged with R
   data <- read.csv("stackoverflow.csv") 
@@ -95,27 +98,25 @@ if(refresh == TRUE){
   y2[y2 == 1]  <- 0
   y2[y2 > 1]   <- 1
   y2           <- as.factor(y2)
-
+  
+  x <- readRDS("x.rds")
   rf <- readRDS("rf.rds")
-
-  userdf.default <- x[1,]
-  userdf         <- userdf.default
+  userdf <- x[1,]
 }
-# Read in RF --------------------------------------------------------------
+# Read in RDS -------------------------------------------------------------
+x      <- readRDS("x.rds")
+rf     <- readRDS("rf.rds")
+userdf <- x[1,]
 
 # Run shinyServer function
 shinyServer(function(input, output) {
-  output$info  <- renderText({paste("The selected task is", 
-                                   paste(input$select_task))})
   output$info1 <- renderText({paste("Model accuracy is 81%")})
   output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
   output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})
   output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                  
 
   # Handle tag nightmare
-#   for(i in 1:colnames(userdf)){
-#     if(colnames(userdf[i]) %in% paste(input$sotags)){userdf[,i] <- 1} }
-  
+
   # Reactively update the prediction dataset!
   values <- reactiveValues()
   values$df <- userdf
@@ -127,11 +128,12 @@ shinyServer(function(input, output) {
       values$df$views       <- input$views
       values$df$votes       <- input$votes
   })
-  output$table <- renderTable({values$df})
-  userdata     <- renderTable({data.frame(values$df)})
-  runmodel     <- reactive({
-                      predict(rf, newdata = userdata)
+  output$table <- renderTable({data.frame(values$df)})
+  userdata     <- reactive({data.frame(values$df)})
+  val          <- reactiveValues()
+  runmodel     <- observe({
+                    val$res <-  predict(rf, newdata = userdata())
   })
 
-  output$results <- renderUI({runmodel})
+  output$results <- renderPrint({val$res})
 })  
