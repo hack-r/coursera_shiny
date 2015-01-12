@@ -1101,7 +1101,7 @@ shinyUI(
                          "Tag(s):", textOutput("info4")),
         tabPanel("Results", textOutput("results")),
         tabPanel("User Data", tableOutput("table")),
-        tabPanel("Visualization")
+        tabPanel("Visualization", textOutput("temp"))
       )
     )
   )

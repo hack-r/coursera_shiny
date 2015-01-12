@@ -136,4 +136,5 @@ shinyServer(function(input, output) {
   })
 
   output$results <- renderPrint({val$res})
+  output$temp    <- renderText({dim(userdata())})
 })  
