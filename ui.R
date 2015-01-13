@@ -1096,7 +1096,32 @@ shinyUI(
     # Main Panel for displaying results
     mainPanel(
       tabsetPanel(
-        tabPanel("Info",  textOutput("info1"), br(),
+        tabPanel("Documentation", h1("USER GUIDE"), h2("Overview"),
+                 "This is a simple web app.", p(), 
+                 "This app predicts if you will receive an answer to your 
+                 question on Stackoverflow (http://stackoverflow.com), based on 
+                 your badges, reputation, votes, views, and tags.",p(), "To 
+                 construct this algorithm I used the OXPath data extraction 
+                 language to scrape approximately 1,700 questions (with answer 
+                 counts) from Stackoverflow, tidied up the data and ran a Random 
+                 Forest to classify the questions based on the outcomes (answers).",
+                 p(), "My methodology for sampling questions was to focus on 
+                 questions tagged with R and to sample 50 questions from each 
+                 100 pages of questions from present to the oldest questions 
+                 archived by Stackoverflow, where each page of questions contained 
+                 50 questions.",
+                 h2("Instructions"), p(), "Simply update the values in the 
+                 sidepanel to reflect ", tags$ul(
+                   tags$li("your number of badges (bronze, silver, and gold)"), 
+                   tags$li("reputation points"), 
+                   tags$li("the number of views and votes already received by 
+                           your question"),
+                   tags$li("any tags you’ve added to your question")
+                 ), p(), "Note that the data used to train my classifer were 
+                 largely questions that contained (at least) an R tag, so 
+                 de-selecting the R tag may lead to less accurate predictions.",
+                 p(), "Have fun!", p(), "#JeSuisCharlie"),
+        tabPanel("Config",  textOutput("info1"), br(),
                    br(), textOutput("info2"), textOutput("info3"), br(),
                          "Tag(s):", textOutput("info4")),
         tabPanel("Results", textOutput("results")),
