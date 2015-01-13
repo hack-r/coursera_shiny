@@ -14,7 +14,6 @@ require(shiny)
 require(shinyapps)
 require(stringr)
 
-
 # Generate RF -------------------------------------------------------
 if(refresh == TRUE){
   # XPath Stackoverflow data scrape of questions tagged with R
@@ -103,13 +102,13 @@ if(refresh == TRUE){
   rf <- readRDS("rf.rds")
   userdf <- x[1,]
 }
-# Read in RDS -------------------------------------------------------------
-x      <- readRDS("x.rds")
-rf     <- readRDS("rf.rds")
-userdf <- x[1,]
 
 # Run shinyServer function
 shinyServer(function(input, output) {
+  x      <- readRDS("x.rds")
+  rf     <- readRDS("rf.rds")
+  userdf <- x[1,]
+  
   output$info1 <- renderText({paste("Model accuracy is 81%")})
   output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
   output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})

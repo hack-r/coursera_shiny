@@ -60,7 +60,7 @@ shinyUI(
                      value = 1),
 
 # big checkbox ------------------------------------------------------------
-        checkboxGroupInput("sotags", label = "Tags:",  list( 
+            selectizeInput("sotags", label = "Tags:",  list( 
                            "32bit-64bit"  ,
                            "3d"	,
                            "3d-array"	,
@@ -1087,8 +1087,8 @@ shinyUI(
                            "yahoo"	,
                            "yaml"	,
                            "yield"	,
-                           "zoo"), selected = "r"
-        ) #ends checkbox
+                           "zoo"), selected = "r", multiple = TRUE
+        ) #ends selectizeInput
     # ) #ends conditional panel
     ),  #ends sidebarPanel
     
