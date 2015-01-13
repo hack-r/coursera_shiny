@@ -7,7 +7,7 @@ refresh <- FALSE
 
 # Libraries
 require(data.table)
-require(manipulate)
+#require(manipulate)
 require(plyr)
 require(randomForest)
 require(shiny)
