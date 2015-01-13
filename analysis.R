@@ -26,3 +26,13 @@ confusionMatrix(validation, testing$answers.binary) #81%
 
 # Save the Object ---------------------------------------------------------
 saveRDS(rf, file = "rf.rds")
+
+
+# Alternate Analysis (Regression) -----------------------------------------
+glmdata <- cbind(x, y)
+fit <- glm(y~ ., data = glmdata, family = binomial(link = "logit"))
+summary.glm(fit)
+nullmod <- glm(y~ 1, data = glmdata, family = binomial(link = "logit"))
+1-logLik(fit)/logLik(nullmod)
+#'log Lik.' 0.6693239 (df=647)
+saveRDS(fit, file = "fit.rds")

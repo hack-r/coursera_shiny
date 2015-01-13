@@ -107,6 +107,7 @@ if(refresh == TRUE){
 shinyServer(function(input, output) {
   x      <- readRDS("x.rds")
   rf     <- readRDS("rf.rds")
+  glm    <- readRDS("fit.rds")
   userdf <- x[1,]
   
   output$info1 <- renderText({paste("Model accuracy is 81%")})
@@ -131,9 +132,10 @@ shinyServer(function(input, output) {
   output$table <- renderTable({data.frame(values$df)})
   userdata     <- reactive({data.frame(values$df)})
   val          <- reactiveValues()
-  val$res      <-  predict(rf, newdata = userdata())
+  val$res      <-  predict(rf, newdata = userdf) #predict(rf, newdata = userdata())
 
-  output$results <- renderPrint({val$res})
+  output$results <- renderTable(data.frame({as.numeric(val$res)-1}),
+                                include.rownames=FALSE, include.colnames = FALSE, digits = 0)
   output$temp    <- renderText({dim(userdata())})
 
 
