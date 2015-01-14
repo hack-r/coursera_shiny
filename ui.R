@@ -31,13 +31,11 @@ shinyUI(
 #           width = "200px", height = "200px"),
       h4("Options"),
 
-      selectInput('plot_options', 'Select diagnostic plot:',
-                               c("MSE" = "MSE",
-                                "Error Rates" = "Error Rates", 
-                                "ROC" = "ROC")),
+#       selectInput('plot_options', 'Select diagnostic plot:',
+#                                c("MSE" = "MSE",
+#                                 "Error Rates" = "Error Rates", 
+#                                 "ROC" = "ROC")),
       hr(),
-#       conditionalPanel(
-#         condition = "input.select_task == 'Prediction'", 
         h5('Enter parameters for prediction:'),
         hr(),
         numericInput("bron_badges", 
@@ -1123,14 +1121,14 @@ shinyUI(
                  de-selecting the R tag may lead to less accurate predictions.",
                  p(), "Have fun!", p(), "#JeSuisCharlie"),
         tabPanel("Config",  textOutput("info1"), br(),
-                   br(), textOutput("info2"), textOutput("info3"), br(),
+                   br(), textOutput("info2"), br(),
                          "Tag(s):", textOutput("info4")),
         tabPanel("Results", h2("Based on your input, I predict that you fall into
                                the following category:"),h2(textOutput("results")),
                                "where",p(), h3("1 means that you will get an answer"),
                               p(), "and" , p(), h3("0 means that you will not.")),
         tabPanel("User Data", tableOutput("table")),
-        tabPanel("Visualization", textOutput("temp"))
+        tabPanel("Visualization", plotOutput("viz"))
       )
     )
   )

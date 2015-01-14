@@ -7,9 +7,8 @@ refresh <- FALSE
 
 # Libraries
 require(data.table)
-#require(manipulate)
-require(plyr)
 require(randomForest)
+require(ROCR)
 require(shiny)
 require(shinyapps)
 require(stringr)
@@ -108,11 +107,14 @@ shinyServer(function(input, output) {
   x      <- readRDS("x.rds")
   rf     <- readRDS("rf.rds")
   glm    <- readRDS("fit.rds")
+  viz    <- readRDS("viz.rds")
   userdf <- x[1,]
   
-  output$info1 <- renderText({paste("Model accuracy is 81%")})
+  output$viz   <- renderPlot("viz")
+  
+  output$info1 <- renderText({paste("Model accuracy is 88%")})
   output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
-  output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})
+  #output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})
   output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                  
 
   # Handle tag nightmare
@@ -131,12 +133,6 @@ shinyServer(function(input, output) {
   })
   output$table <- renderTable({data.frame(values$df)})
   userdata     <- reactive({data.frame(values$df)})
-#   val          <- reactiveValues()
-#   val$res      <- reactive({ predict(rf, newdata = userdata())})
-# 
-#   output$results <- renderTable(data.frame({as.numeric(val$res)-1}),
-#                                 include.rownames=FALSE, include.colnames = FALSE, digits = 0)
-  output$temp    <- renderText({dim(userdata())})
 
   output$results <- renderText({
                       {  ds1 <- userdata()
@@ -144,7 +140,7 @@ shinyServer(function(input, output) {
                          ds1 <- ds1[,sort(names(ds1))] 
                          ds1 <- colnames(x)
                          #predict(rf, newdata = ds1)
-                         table(is.na(ds1))
+                         table(is.na(ds1))                         
                       }
                       })
 })  

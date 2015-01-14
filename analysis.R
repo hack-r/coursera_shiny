@@ -5,28 +5,27 @@
 # Libraries ---------------------------------------------------------------
 require(caret)
 require(randomForest)
+require(ROCR)
 require(stringr)
 
 # Analysis ----------------------------------------------------------------
 rf          <- randomForest(x = x, y = y2, ntree = 50)
-predictions <- predict(rf, newdata = training)
-
-confusionMatrix(predictions, training$answers.binary) #87.2% accuracy
+predictions <- predict(rf, newdata = x)
+pred        <- predict(rf, type = "prob")
+confusionMatrix(predictions, training$answers.binary) #88.04% accuracy
 
 # Testing the Algorithm ---------------------------------------------------
 validation <- predict(rf, newdata = testing)
 
-confusionMatrix(validation, testing$answers.binary) #81%
-
-# Comment: Not bad, though not stellar performance. We can improve the performance
-#                 by coding a structured version of the "age" variable, doing
-#                 text-mining on the question titles and bodies, and/or 
-#                 increasing the number of trees, as time allows
-
-
-# Save the Object ---------------------------------------------------------
+confusionMatrix(validation, testing$answers.binary) #81.49%
 saveRDS(rf, file = "rf.rds")
 
+# Viz ---------------------------------------------------------------------
+preds <- prediction(as.numeric(predictions), y2)
+perf  <- performance(preds, "tpr", "fpr")
+viz <- plot(perf,col='red',lwd=3)
+abline(a=0,b=1,lwd=2,lty=2,col="gray")
+saveRDS(viz, file = "viz.rds")
 
 # Alternate Analysis (Regression) -----------------------------------------
 glmdata <- cbind(x, y)
