@@ -1120,7 +1120,7 @@ shinyUI(
                    br(), textOutput("info2"), br(),
                          "Tag(s):", textOutput("info4")),
         tabPanel("Results", h2("Based on your input, I predict that you fall into
-                               the following category:"),h2(textOutput("results")),
+                               the following category:"),h2(tableOutput("results")),
                                "where",p(), h3("1 means that you will get an answer"),
                               p(), "and" , p(), h3("0 means that you will not.")),
         tabPanel("User Data", tableOutput("table")),
