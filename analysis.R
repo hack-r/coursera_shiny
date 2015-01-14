@@ -23,9 +23,9 @@ saveRDS(rf, file = "rf.rds")
 # Viz ---------------------------------------------------------------------
 preds <- prediction(as.numeric(predictions), y2)
 perf  <- performance(preds, "tpr", "fpr")
-viz <- plot(perf,col='red',lwd=3)
+plot(perf,col='red',lwd=3)
 abline(a=0,b=1,lwd=2,lty=2,col="gray")
-saveRDS(viz, file = "viz.rds")
+saveRDS(perf, file = "perf.rds")
 
 # Alternate Analysis (Regression) -----------------------------------------
 glmdata <- cbind(x, y)

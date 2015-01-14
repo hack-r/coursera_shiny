@@ -1128,7 +1128,8 @@ shinyUI(
                                "where",p(), h3("1 means that you will get an answer"),
                               p(), "and" , p(), h3("0 means that you will not.")),
         tabPanel("User Data", tableOutput("table")),
-        tabPanel("Visualization", plotOutput("viz"))
+        tabPanel("Visualization", "Note: the plot is not reactive; it's for the overall model",
+                 plotOutput("viz"))
       )
     )
   )

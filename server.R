@@ -107,10 +107,12 @@ shinyServer(function(input, output) {
   x      <- readRDS("x.rds")
   rf     <- readRDS("rf.rds")
   glm    <- readRDS("fit.rds")
-  viz    <- readRDS("viz.rds")
+  perf   <- readRDS("perf.rds")
   userdf <- x[1,]
   
-  output$viz   <- renderPlot("viz")
+  output$viz   <- renderPlot({plot(perf,col='red',lwd=3)
+                              abline(a=0,b=1,lwd=2,lty=2,col="gray")
+  })
   
   output$info1 <- renderText({paste("Model accuracy is 88%")})
   output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
@@ -135,12 +137,11 @@ shinyServer(function(input, output) {
   userdata     <- reactive({data.frame(values$df)})
 
   output$results <- renderText({
-                      {  ds1 <- userdata()
+                      {  ds1 <- values$df #userdata()
                          x   <- x[,sort(names(x))] 
                          ds1 <- ds1[,sort(names(ds1))] 
                          ds1 <- colnames(x)
-                         #predict(rf, newdata = ds1)
-                         table(is.na(ds1))                         
+                         predict(rf, newdata = ds1)
                       }
                       })
 })  
