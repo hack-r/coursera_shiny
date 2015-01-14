@@ -131,12 +131,20 @@ shinyServer(function(input, output) {
   })
   output$table <- renderTable({data.frame(values$df)})
   userdata     <- reactive({data.frame(values$df)})
-  val          <- reactiveValues()
-  val$res      <-  predict(rf, newdata = userdf) #predict(rf, newdata = userdata())
-
-  output$results <- renderTable(data.frame({as.numeric(val$res)-1}),
-                                include.rownames=FALSE, include.colnames = FALSE, digits = 0)
+#   val          <- reactiveValues()
+#   val$res      <- reactive({ predict(rf, newdata = userdata())})
+# 
+#   output$results <- renderTable(data.frame({as.numeric(val$res)-1}),
+#                                 include.rownames=FALSE, include.colnames = FALSE, digits = 0)
   output$temp    <- renderText({dim(userdata())})
 
-
+  output$results <- renderText({
+                      {  ds1 <- userdata()
+                         x   <- x[,sort(names(x))] 
+                         ds1 <- ds1[,sort(names(ds1))] 
+                         ds1 <- colnames(x)
+                         #predict(rf, newdata = ds1)
+                         table(is.na(ds1))
+                      }
+                      })
 })  
