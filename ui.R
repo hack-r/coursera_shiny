@@ -31,10 +31,7 @@ shinyUI(
 #           width = "200px", height = "200px"),
       h4("Options"),
 
-#       selectInput('plot_options', 'Select diagnostic plot:',
-#                                c("MSE" = "MSE",
-#                                 "Error Rates" = "Error Rates", 
-#                                 "ROC" = "ROC")),
+
       hr(),
         h5('Enter parameters for prediction:'),
         hr(),
@@ -1087,7 +1084,6 @@ shinyUI(
                            "yield"	,
                            "zoo"), selected = "r", multiple = TRUE
         ) #ends selectizeInput
-    # ) #ends conditional panel
     ),  #ends sidebarPanel
     
 # mainPanel ---------------------------------------------------------------
