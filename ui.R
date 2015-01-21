@@ -27,11 +27,8 @@ shinyUI(
   sidebarLayout(
 # sidebarPanel ------------------------------------------------------------
     sidebarPanel(
-#       img(src="Stack_Exchange_Logo.png",
-#           width = "200px", height = "200px"),
-      h4("Options"),
-
-
+       tags$img(src="StackOverflow.jpg"),
+          # width = "200px", height = "200px"),
       hr(),
         h5('Enter parameters for prediction:'),
         hr(),

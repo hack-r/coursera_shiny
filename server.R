@@ -43,14 +43,15 @@ shinyServer(function(input, output) {
       values$df$views       <- input$views
       values$df$votes       <- input$votes
   })
-  #output$table <- renderTable({data.frame(values$df)})
+  output$table <- renderTable({data.frame(values$df)})
   #userdata     <- reactive({data.frame(values$df)})
 
   output$results <- renderTable({
                       {  ds1        <- values$df 
-                         x          <- x[,sort(names(x))] 
+                         cn         <- rf$forest$ncat
+                         cn         <- cn[,sort(names(cn))] 
                          ds1        <- ds1[,sort(names(ds1))] 
-                         names(ds1) <- colnames(x)
+                         names(ds1) <- names(cn)#x #rf$forest$xlevels
                          predict(rf, newdata = data.frame(ds1))
                       }
                       })
