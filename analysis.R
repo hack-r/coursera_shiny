@@ -18,7 +18,7 @@ data <- read.csv("stackoverflow.csv")
 data$link_title <- NULL
 data$reputation[is.na(data$reputation)] <- 0
 
-# Transform tags string into structured data
+# Transform badges string into structured data
 data$badgestr    <- as.character(data$badges)
 data$badgestr    <- gsub(";", "", data$badgestr)
 badgesplit      <- str_split_fixed(data$badgestr, " ", 3)
@@ -99,9 +99,10 @@ predictions <- predict(rf, newdata = x)
 pred        <- predict(rf, type = "prob")
 confusionMatrix(predictions, training$answers.binary) #88.04% accuracy
 
-# Logit version (this is a patch for while randomForest still isn't working...
-#                 see )
-fit <- glm(answers ~ votes + reputation + views, family = "binomial", data = training)
+
+# GLM ---------------------------------------------------------------------
+fit <- glm(answers ~ votes + reputation + views + I(bron_badges + silv_badges 
+                           + gold_badges),  data = training)
 summary.glm(fit)
 saveRDS(fit, file = "ordered_logit.rds")
 saveRDS(training, file = "training.rds")
@@ -119,11 +120,11 @@ plot(perf,col='red',lwd=3)
 abline(a=0,b=1,lwd=2,lty=2,col="gray")
 saveRDS(perf, file = "perf.rds")
 
-# Alternate Analysis (Regression) -----------------------------------------
-glmdata <- cbind(x, y)
-fit <- glm(y~ ., data = glmdata, family = binomial(link = "logit"))
-summary.glm(fit)
-nullmod <- glm(y~ 1, data = glmdata, family = binomial(link = "logit"))
-1-logLik(fit)/logLik(nullmod)
-#'log Lik.' 0.6693239 (df=647)
-saveRDS(fit, file = "fit.rds")
+# Alternate Analysis (regular logit) --------------------------------------
+# glmdata <- cbind(x, y)
+# fit <- glm(y~ ., data = glmdata, family = binomial(link = "logit"))
+# summary.glm(fit)
+# nullmod <- glm(y~ 1, data = glmdata, family = binomial(link = "logit"))
+# 1-logLik(fit)/logLik(nullmod)
+# #'log Lik.' 0.6693239 (df=647)
+# saveRDS(fit, file = "fit.rds")
