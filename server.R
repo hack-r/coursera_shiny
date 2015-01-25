@@ -54,7 +54,10 @@ shinyServer(function(input, output) {
 #                          cn         <- cn[,sort(names(cn))] 
 #                          ds1        <- ds1[,sort(names(ds1))] 
 #                          names(ds1) <- names(cn)#x #rf$forest$xlevels
-                         predict(ol, newdata = data.frame(ds1))
+                         a <- predict(ol, newdata = data.frame(ds1))
+                         names(a) <- NULL
+                         cat(a)
+
                       }
                       })
 })  
