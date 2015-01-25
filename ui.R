@@ -1114,13 +1114,9 @@ h6("Feature Preview: Tag-based Prediction"),
                  largely questions that contained (at least) an R tag, so 
                  de-selecting the R tag may lead to less accurate predictions.",
                  p(), "Have fun!", p(), "#JeSuisCharlie"),
-        tabPanel("Config",  textOutput("info1"), br(),
-                   br(), textOutput("info2"), br(),
-                         "Tag(s):", textOutput("info4")),
         tabPanel("Results", h2("Based on your input, SO Answer predictor predicts that you will receive "),h2(textOutput("results")),
                                h2(" answers to your question."),
-                              p(), "Note:" , p(), h3("Text-mining and tags will augment this prediction soon!")),
-        tabPanel("User Data", tableOutput("table")),
+                              p(), "Note:" , p(), "Text-mining and tags will augment this prediction soon!"),
         tabPanel("Visualization", "Note: the plot is not reactive; it's for the overall model",
                  plotOutput("viz"))
       )
