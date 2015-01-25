@@ -19,6 +19,18 @@ data$link_title <- NULL
 data$reputation[is.na(data$reputation)] <- 0
 
 # Transform tags string into structured data
+data$badgestr    <- as.character(data$badges)
+data$badgestr    <- gsub(";", "", data$badgestr)
+badgesplit      <- str_split_fixed(data$badgestr, " ", 3)
+data$bron_badges <- badgesplit[,1]
+data$silv_badges <- badgesplit[,2]
+data$gold_badges <- badgesplit[,3]
+data$bron_badges[data$bron_badges == ""] <- 0
+data$silv_badges[data$silv_badges == ""] <- 0
+data$gold_badges[data$gold_badges == ""] <- 0
+data$bron_badges <- as.numeric(data$bron_badges)
+data$silv_badges <- as.numeric(data$silv_badges)
+data$gold_badges <- as.numeric(data$gold_badges)
 
 #Split tags apart
 data$tags <- as.character(data$tags)
