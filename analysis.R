@@ -18,7 +18,7 @@ data <- read.csv("stackoverflow.csv")
 data$link_title <- NULL
 data$reputation[is.na(data$reputation)] <- 0
 
-# Transform badges string into structured data
+# Transform tags string into structured data
 
 #Split tags apart
 data$tags <- as.character(data$tags)
