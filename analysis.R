@@ -81,15 +81,18 @@ y2[y2 == 1]  <- 0
 y2[y2 > 1]   <- 1
 y2           <- as.factor(y2)
 
-x  <- readRDS("x.rds")
-rf <- readRDS("rf.rds")
-userdf <- x[1,]
-
 # Analysis ----------------------------------------------------------------
 rf          <- randomForest(x = x, y = y2, ntree = 50)
 predictions <- predict(rf, newdata = x)
 pred        <- predict(rf, type = "prob")
 confusionMatrix(predictions, training$answers.binary) #88.04% accuracy
+
+# Logit version (this is a patch for while randomForest still isn't working...
+#                 see )
+fit <- glm(answers ~ votes + reputation + views, family = "binomial", data = training)
+summary.glm(fit)
+saveRDS(fit, file = "ordered_logit.rds")
+saveRDS(training, file = "training.rds")
 
 # Testing the Algorithm ---------------------------------------------------
 validation <- predict(rf, newdata = testing)

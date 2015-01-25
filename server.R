@@ -18,6 +18,8 @@ shinyServer(function(input, output) {
   rf     <- readRDS("rf.rds")
   glm    <- readRDS("fit.rds")
   perf   <- readRDS("perf.rds")
+  ol     <- readRDS("ordered_logit.rds")
+  train  <- readRDS("training.rds")
   userdf <- x[1,]
   
   output$viz   <- renderPlot({plot(perf,col='red',lwd=3)
@@ -46,13 +48,13 @@ shinyServer(function(input, output) {
   output$table <- renderTable({data.frame(values$df)})
   #userdata     <- reactive({data.frame(values$df)})
 
-  output$results <- renderTable({
+  output$results <- renderPrint({
                       {  ds1        <- values$df 
-                         cn         <- rf$forest$ncat
-                         cn         <- cn[,sort(names(cn))] 
-                         ds1        <- ds1[,sort(names(ds1))] 
-                         names(ds1) <- names(cn)#x #rf$forest$xlevels
-                         predict(rf, newdata = data.frame(ds1))
+#                          cn         <- rf$forest$ncat
+#                          cn         <- cn[,sort(names(cn))] 
+#                          ds1        <- ds1[,sort(names(ds1))] 
+#                          names(ds1) <- names(cn)#x #rf$forest$xlevels
+                         predict(ol, newdata = data.frame(ds1))
                       }
                       })
 })  

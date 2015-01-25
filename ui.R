@@ -1095,8 +1095,8 @@ h6("Feature Preview: Tag-based Prediction"),
                  your badges, reputation, votes, views, and tags.",p(), "To 
                  construct this algorithm I used the OXPath data extraction 
                  language to scrape approximately 1,700 questions (with answer 
-                 counts) from Stackoverflow, tidied up the data and ran a Random 
-                 Forest to classify the questions based on the outcomes (answers).",
+                 counts) from Stackoverflow, tidied up the data and ran an algorithm 
+                 to predict response to the question, in terms of answers.",
                  p(), "My methodology for sampling questions was to focus on 
                  questions tagged with R and to sample 50 questions from each 
                  100 pages of questions from present to the oldest questions 
@@ -1117,10 +1117,9 @@ h6("Feature Preview: Tag-based Prediction"),
         tabPanel("Config",  textOutput("info1"), br(),
                    br(), textOutput("info2"), br(),
                          "Tag(s):", textOutput("info4")),
-        tabPanel("Results", h2("Based on your input, I predict that you fall into
-                               the following category:"),h2(tableOutput("results")),
-                               "where",p(), h3("1 means that you will get an answer"),
-                              p(), "and" , p(), h3("0 means that you will not.")),
+        tabPanel("Results", h2("Based on your input, SO Answer predictor predicts that you will receive "),h2(textOutput("results")),
+                               h2(" answers to your question."),
+                              p(), "Note:" , p(), h3("Text-mining and tags will augment this prediction soon!")),
         tabPanel("User Data", tableOutput("table")),
         tabPanel("Visualization", "Note: the plot is not reactive; it's for the overall model",
                  plotOutput("viz"))
