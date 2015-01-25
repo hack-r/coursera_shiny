@@ -52,7 +52,7 @@ shinyUI(
                      value = 1),
 
 # big checkbox ------------------------------------------------------------
-            selectizeInput("sotags", label = "Tags:",  list( 
+            selectizeInput("sotags", label = h5("Tags:"),  list( 
                            "32bit-64bit"  ,
                            "3d"	,
                            "3d-array"	,
@@ -1111,7 +1111,9 @@ shinyUI(
                  ), "then click on the Results tab to see the prediction!",
                  p(), "Note that all tags are not currently used in the model, 
                  though this will change in future versions of the algorithm.",
-                 p(), "Have fun!", p(), "#JeSuisCharlie"),
+                 br(), "Have fun!", p(), "My blog: http://hack-r.com",
+                 br(), "My Github: http://github.com/hack-r",
+                 br(), "My Github.io: http://hack-r.github.io"),
         tabPanel("Results", h2("Based on your input, SO Answer predictor predicts that you will receive "),h2(textOutput("results")),
                                h2(" answers to your question."),
                               p(), "Note:" , p(), "Text-mining of questions will be used in

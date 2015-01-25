@@ -107,7 +107,7 @@ fit <- glm(answers ~ votes + reputation + views + I(bron_badges + silv_badges
 #                                                 training$freeze + training$rdp +
 #                                                 training$chunks + training$python +
                                                 training$ruby),  
-                                              data = training)
+                                                data = training) 
 summary.glm(fit)
 saveRDS(fit, file = "ordered_logit.rds")
 saveRDS(training, file = "training.rds")

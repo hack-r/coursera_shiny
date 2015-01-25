@@ -2,8 +2,6 @@
 ## Desc: This is the ui of my Coursera class project shiny app
 ## Copyright: (c) 2014, Jason D. Miller
 
-
-
 # Libraries
 require(data.table)
 require(randomForest)
@@ -46,14 +44,9 @@ shinyServer(function(input, output) {
       values$df$votes       <- input$votes
   })
   output$table <- renderTable({data.frame(values$df)})
-  #userdata     <- reactive({data.frame(values$df)})
 
   output$results <- renderPrint({
                       {  ds1        <- values$df 
-#                          cn         <- rf$forest$ncat
-#                          cn         <- cn[,sort(names(cn))] 
-#                          ds1        <- ds1[,sort(names(ds1))] 
-#                          names(ds1) <- names(cn)#x #rf$forest$xlevels
                          a <- predict(ol, newdata = data.frame(ds1))
                          names(a) <- NULL
                          cat(a)
