@@ -102,7 +102,12 @@ confusionMatrix(predictions, training$answers.binary) #88.04% accuracy
 
 # GLM ---------------------------------------------------------------------
 fit <- glm(answers ~ votes + reputation + views + I(bron_badges + silv_badges 
-                           + gold_badges),  data = training)
+                           + gold_badges) + I(training$ggplot2 + training$r +
+#                                                 training$mathjax +
+#                                                 training$freeze + training$rdp +
+#                                                 training$chunks + training$python +
+                                                training$ruby),  
+                                              data = training)
 summary.glm(fit)
 saveRDS(fit, file = "ordered_logit.rds")
 saveRDS(training, file = "training.rds")

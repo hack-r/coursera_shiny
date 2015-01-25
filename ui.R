@@ -52,7 +52,6 @@ shinyUI(
                      value = 1),
 
 # big checkbox ------------------------------------------------------------
-h6("Feature Preview: Tag-based Prediction"),
             selectizeInput("sotags", label = "Tags:",  list( 
                            "32bit-64bit"  ,
                            "3d"	,
@@ -1110,13 +1109,13 @@ h6("Feature Preview: Tag-based Prediction"),
                            your question"),
                    tags$li("any tags you’ve added to your question")
                  ), "then click on the Results tab to see the prediction!",
-                 p(), "Note that the data used to train my classifer were 
-                 largely questions that contained (at least) an R tag, so 
-                 de-selecting the R tag may lead to less accurate predictions.",
+                 p(), "Note that all tags are not currently used in the model, 
+                 though this will change in future versions of the algorithm.",
                  p(), "Have fun!", p(), "#JeSuisCharlie"),
         tabPanel("Results", h2("Based on your input, SO Answer predictor predicts that you will receive "),h2(textOutput("results")),
                                h2(" answers to your question."),
-                              p(), "Note:" , p(), "Text-mining and tags will augment this prediction soon!"),
+                              p(), "Note:" , p(), "Text-mining of questions will be used in
+                                                    this prediction soon!"),
         tabPanel("Visualization", "Note: the plot is not reactive; it's for the overall model",
                  plotOutput("viz"))
       )
