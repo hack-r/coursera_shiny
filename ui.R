@@ -27,7 +27,7 @@ shinyUI(
   sidebarLayout(
 # sidebarPanel ------------------------------------------------------------
     sidebarPanel(
-       tags$img(src="StackOverflow.jpg"),
+       #tags$img(src="StackOverflow.jpg"),
           # width = "200px", height = "200px"),
       hr(),
         h5('Enter parameters for prediction:'),
@@ -52,6 +52,7 @@ shinyUI(
                      value = 1),
 
 # big checkbox ------------------------------------------------------------
+h6("Feature Preview: Tag-based Prediction"),
             selectizeInput("sotags", label = "Tags:",  list( 
                            "32bit-64bit"  ,
                            "3d"	,
