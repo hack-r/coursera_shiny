@@ -1114,15 +1114,18 @@ shinyUI(
                  br(), "Have fun!", p(), "My blog: http://hack-r.com",
                  br(), "My Github: http://github.com/hack-r",
                  br(), "My Github.io: http://hack-r.github.io"),
-        tabPanel("Results", h2("Based on your input, SO Answer predictor predicts that you will receive "),h2(textOutput("results")),
+        tabPanel("Results", h2("Based on your input, SO Answer predictor predicts that you will receive "),
+                 h2(textOutput("results")),
                                h2(" answers to your question."),
                               p(), "Note:" , p(), "Text-mining of questions will be used in
                                                     this prediction soon!"),
-        tabPanel("Visualization", "Note: the plot is not reactive; it's for the overall model",
-                 plotOutput("viz"))
+        tabPanel("Visualization", "Note: the plot is NOT reactive; 
+                 it's for the overall model",
+                 plotOutput("viz")),
+        tabPanel("Server Operations",
+                 mainPanel(
+                   includeHTML("server.html")))
       )
     )
   )
     ))
-
-
