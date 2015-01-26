@@ -54,7 +54,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="header">
 <h1 class="title">server.R</h1>
 <h4 class="author"><em>Jason</em></h4>
-<h4 class="date"><em>Mon Jan 26 01:53:39 2015</em></h4>
+<h4 class="date"><em>Mon Jan 26 02:22:10 2015</em></h4>
 </div>
 
 
@@ -103,14 +103,6 @@ shinyServer(function(input, output) {
   output$viz   &lt;- renderPlot({plot(perf,col='red',lwd=3)
                               abline(a=0,b=1,lwd=2,lty=2,col=&quot;gray&quot;)
   })
-  
-  output$info1 &lt;- renderText({paste(&quot;Model accuracy is 88%&quot;)})
-  output$info2 &lt;- renderText({paste(&quot;A ROC plot is available in the Visualization tab&quot;)})
-  #output$info3 &lt;- renderText({paste(&quot;The selected plot is:&quot;, paste(input$plot_options))})
-  output$info4 &lt;- renderText({paste(input$sotags, collpase = &quot; &quot;, sep = &quot;,&quot;)})                  
-
-  # Handle tag nightmare
-  # Needs work
 
   # Reactively update the prediction dataset!
   values &lt;- reactiveValues()

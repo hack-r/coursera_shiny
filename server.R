@@ -23,14 +23,6 @@ shinyServer(function(input, output) {
   output$viz   <- renderPlot({plot(perf,col='red',lwd=3)
                               abline(a=0,b=1,lwd=2,lty=2,col="gray")
   })
-  
-  output$info1 <- renderText({paste("Model accuracy is 88%")})
-  output$info2 <- renderText({paste("A ROC plot is available in the Visualization tab")})
-  #output$info3 <- renderText({paste("The selected plot is:", paste(input$plot_options))})
-  output$info4 <- renderText({paste(input$sotags, collpase = " ", sep = ",")})                  
-
-  # Handle tag nightmare
-  # Needs work
 
   # Reactively update the prediction dataset!
   values <- reactiveValues()

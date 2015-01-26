@@ -1120,8 +1120,9 @@ shinyUI(
                               p(), "Note:" , p(), "Text-mining of questions will be used in
                                                     this prediction soon!"),
         tabPanel("Visualization", "Note: the plot is NOT reactive; 
-                 it's for the overall randomForest model -- a plot for the
-                 ordered logit version is coming soon",
+                 it's for the initial algorithm I used, a randomForest model which 
+                 only predicted if you'd receive an answer, but not how many -- a plot for the
+                 newer algorthim is coming soon",
                  plotOutput("viz")),
         tabPanel("Server Operations",
                  mainPanel(
