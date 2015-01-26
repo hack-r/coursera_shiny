@@ -1,5 +1,5 @@
 ## File: server.R
-## Desc: This is the ui of my Coursera class project shiny app
+## Desc: This is the server script of my Coursera class project shiny app
 ## Copyright: (c) 2014, Jason D. Miller
 
 # Libraries
